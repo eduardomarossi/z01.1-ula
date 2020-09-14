@@ -1,7 +1,8 @@
 import sys
 from random import randrange
-
 from ula import compute_ula
+
+VERSION = '1.0.1'
 
 
 class UlaTerminal:
@@ -38,15 +39,17 @@ class UlaTerminal:
                 valor = int(input('Digite um valor para o campo: '))
                 if campo not in ['x', 'y'] and (valor < 0 or valor > 1):
                     valor = None
-                    raise Exception
-                elif campo in ['x', 'y'] and (valor > 2**15 or valor < 2**15):
-                    raise Exception
-            except:
-                print('Valor inválido para o campo')
+                    raise Exception('Valor deve ser 0 ou 1')
+                elif campo in ['x', 'y'] and (valor > (2**15)-1 or valor < -2**15):
+                    valor = None
+                    raise Exception('Valor de X e Y deve estar entre -32768 e 32767')
+            except Exception as e:
+                print(e)
 
         self.data[campo] = valor
 
 if __name__ == '__main__':
+    print('z01.1-ula terminal - v' + VERSION)
     ula = UlaTerminal()
     while True:
         ula.print_ula_vals()

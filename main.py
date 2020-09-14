@@ -4,6 +4,9 @@ from mainwindow import Ui_MainWindow
 from ula import compute_ula
 
 
+VERSION = '1.0.1'
+
+
 class MyUlaWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -15,7 +18,7 @@ class MyUlaWindow(QMainWindow):
                 component.valueChanged.connect(self.recalculate)
 
         self.window_setup = window_setup
-        self.setWindowTitle('z01.1-ula')
+        self.setWindowTitle('z01.1-ula v' + VERSION)
         self.show()
 
     def recalculate(self, f):
