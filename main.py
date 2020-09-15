@@ -1,10 +1,9 @@
 import sys
 from PySide2.QtWidgets import QMainWindow, QApplication
 from mainwindow import Ui_MainWindow
-from ula import compute_ula
+from ula import compute_ula, convert_output
 
-
-VERSION = '1.0.1'
+VERSION = '1.1.0'
 
 
 class MyUlaWindow(QMainWindow):
@@ -16,8 +15,12 @@ class MyUlaWindow(QMainWindow):
         for componentName, component in window_setup.__dict__.items():
             if componentName.endswith('Spin'):
                 component.valueChanged.connect(self.recalculate)
+            elif componentName.endswith('Edit'):
+                 component.textEdited.connect(self.recalculate)
 
         self.window_setup = window_setup
+        self.window_setup.xEdit.setText('01110011')
+        self.window_setup.yEdit.setText('01011111')
         self.setWindowTitle('z01.1-ula v' + VERSION)
         self.show()
 
@@ -26,10 +29,24 @@ class MyUlaWindow(QMainWindow):
         for componentName, component in self.window_setup.__dict__.items():
             if componentName.endswith('Spin'):
                 ula_data[componentName.replace('Spin', '')] = component.value()
+            elif componentName.endswith('Edit'):
+                text = component.text().strip().replace(' ', '')
+                component.setText(text)
+                try:
+                    val = int(text, 2)
+                except ValueError:
+                    if len(text) > 0:
+                        component.setText(text[:-1])
+                    else:
+                        component.setText('0')
+                    val = 0
+
+                ula_data[componentName.replace('Edit', '')] = val
 
         result = compute_ula(**ula_data)
         ws = self.window_setup
-        ws.outLabel.setText(str(result[2]))
+
+        ws.outLabel.setText(convert_output(result[2]))
         ws.ngLabel.setText(str(result[1]))
         ws.zrLabel.setText(str(result[0]))
 

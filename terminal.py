@@ -1,8 +1,8 @@
 import sys
 from random import randrange
-from ula import compute_ula
+from ula import compute_ula, convert_output
 
-VERSION = '1.0.1'
+VERSION = '1.1.0'
 
 
 class UlaTerminal:
@@ -18,11 +18,11 @@ class UlaTerminal:
     def print_ula_vals(self):
         print('======-- ULA --======')
         for k in UlaTerminal.ula_fields:
-            print('{}: {}'.format(k, self.data[k]))
+            print('{0:s}: {1:b}'.format(k, self.data[k]))
         print('\n')
         result = compute_ula(**self.data)
         print('======-- Output --======')
-        print('zr: {}  ng: {}  out (signed): {}'.format(result[0], result[1], result[2]))
+        print('zr: {}  ng: {}  out: {}'.format(result[0], result[1], convert_output(result[2])))
         print('')
 
     def ask(self):
@@ -36,17 +36,22 @@ class UlaTerminal:
 
         while valor is None:
             try:
-                valor = int(input('Digite um valor para o campo: '))
-                if campo not in ['x', 'y'] and (valor < 0 or valor > 1):
+                valor = input('Digite um valor para o campo: ')
+
+                if campo not in ['x', 'y'] and (valor not in ['0', '1']):
                     valor = None
                     raise Exception('Valor deve ser 0 ou 1')
-                elif campo in ['x', 'y'] and (valor > (2**15)-1 or valor < -2**15):
-                    valor = None
-                    raise Exception('Valor de X e Y deve estar entre -32768 e 32767')
+                elif campo in ['x', 'y']:
+                    try:
+                        int(valor, 2)
+                    except:
+                        valor = None
+                        raise Exception('Valor de X e Y deve ser binário')
+
             except Exception as e:
                 print(e)
 
-        self.data[campo] = valor
+        self.data[campo] = int(valor, 2)
 
 if __name__ == '__main__':
     print('z01.1-ula terminal - v' + VERSION)
