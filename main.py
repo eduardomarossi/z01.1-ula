@@ -3,7 +3,7 @@ from PySide2.QtWidgets import QMainWindow, QApplication
 from mainwindow import Ui_MainWindow
 from ula import compute_ula, convert_output
 
-VERSION = '1.1.0'
+VERSION = '1.1.1'
 
 
 class MyUlaWindow(QMainWindow):
@@ -19,8 +19,8 @@ class MyUlaWindow(QMainWindow):
                  component.textEdited.connect(self.recalculate)
 
         self.window_setup = window_setup
-        self.window_setup.xEdit.setText('01110011')
-        self.window_setup.yEdit.setText('01011111')
+        self.window_setup.xEdit.setText('01110011'.zfill(16))
+        self.window_setup.yEdit.setText('01011111'.zfill(16))
         self.setWindowTitle('z01.1-ula v' + VERSION)
         self.show()
 

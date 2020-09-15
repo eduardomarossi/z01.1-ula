@@ -1,6 +1,7 @@
 def compute_ula(x, y, zx, zy, nx, ny, f, no):
     tx = x * (not zx)
     ty = y * (not zy)
+
     if nx:
         tx = -tx
     if ny:
