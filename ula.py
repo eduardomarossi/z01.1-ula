@@ -22,7 +22,7 @@ def compute_ula(x, y, zx, zy, nx, ny, f, no):
 
 
 def convert_output(intval):
-    positivebin = '{0:b}'.format(abs(intval)).zfill(16)
+    positivebin = '{0:b}'.format(abs(intval)).zfill(8)
     outputbin = ''
 
     if intval < 0:
@@ -31,7 +31,7 @@ def convert_output(intval):
                 outputbin += '0'
             else:
                 outputbin += '1'
-        outputbin = '{0:b}'.format(int(outputbin, 2) + 1).zfill(16)
+        outputbin = '{0:b}'.format(int(outputbin, 2) + 1).zfill(8)
     else:
         outputbin = positivebin
 

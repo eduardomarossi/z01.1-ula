@@ -19,12 +19,14 @@ class MyUlaWindow(QMainWindow):
                  component.textEdited.connect(self.recalculate)
 
         self.window_setup = window_setup
-        self.window_setup.xEdit.setText('01110011'.zfill(16))
-        self.window_setup.yEdit.setText('01011111'.zfill(16))
+        self.window_setup.xEdit.setText('01110011'.zfill(8))
+        self.window_setup.yEdit.setText('01011111'.zfill(8))
         self.setWindowTitle('z01.1-ula v' + VERSION)
+        self.recalculate()
         self.show()
 
-    def recalculate(self, f):
+
+    def recalculate(self):
         ula_data = {}
         for componentName, component in self.window_setup.__dict__.items():
             if componentName.endswith('Spin'):
