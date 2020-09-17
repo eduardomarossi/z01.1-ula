@@ -1,4 +1,6 @@
 
+![](image.png)
+
 ## 1. install
 
 Instale o pyQt do pyside2:
