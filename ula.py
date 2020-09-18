@@ -3,9 +3,9 @@ def compute_ula(x, y, zx, zy, nx, ny, f, no):
     ty = y * (not zy)
 
     if nx:
-        tx = -tx
+        tx = ~tx
     if ny:
-        ty = -ty
+        ty = ~ty
 
     if f:
         to = tx + ty
@@ -13,7 +13,7 @@ def compute_ula(x, y, zx, zy, nx, ny, f, no):
         to = tx & ty
 
     if no:
-        to = -to
+        to = ~to
 
     zr = int(to == 0)
     ng = int(to < 0)
