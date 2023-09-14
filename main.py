@@ -1,5 +1,5 @@
 import sys
-from PySide2.QtWidgets import QMainWindow, QApplication
+from PySide6.QtWidgets import QMainWindow, QApplication
 from mainwindow import Ui_MainWindow
 from ula import compute_ula, convert_output
 
